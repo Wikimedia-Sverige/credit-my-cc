@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Bryter någon mot din licens?</title>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+        <link rel='stylesheet' type='text/css' href='stylesheet.css'/>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+        <script type="text/javascript" src="./jquery.loadTemplate-1.4.5.min.js"></script>
+        <script type="text/javascript" src="script.js"></script>
+	</head>
+	<body>
+        <div class="collapse">
+            Examples:
+            <div id="examples" class="examples">
+                <ul>
+                    <li>No license: <a href="./index.html?filename=%22A_Basket%20full%20of%20Wool%22%20%286360159381%29.jpg"><tt>"A Basket full of Wool" (6360159381).jpg</tt></a></li>
+                    <li>PD: <a href="./index.html?filename=Globen.jpg"><tt>Globen.jpg</tt></a></li>
+                    <li>Multple creators: <a href="./index.html?filename=Foo.jpg"><tt>Foo.jpg</tt></a></li>
+                    <li>Easy: <a href="./index.html?filename=Sempervivum%20x%20funckii,%20RBGE%202010,%202.jpg"><tt>Sempervivum x funckii, RBGE 2010, 2.jpg</tt></a></li>
+                    <li>GFDL: <a href="./index.html?filename=0038-fahrradsammlung-RalfR.jpg"><tt>0038-fahrradsammlung-RalfR.jpg</tt></a></li>
+                </ul>
+                <ul>
+                    <li>kopiera texten-knapp</li>
+                    <li>enter för att skicka filnamn</li>
+                    <li>inaktivera skicka-knapp om ingen utgivare</li>
+                    <li>kolla formatering för utgivare</li>
+                    <li>Välj brevtyp "Hur irriterad är du"</li>
+                    <li>Hur ska det spridas?</li>
+                    <li>Val att det registreras/att nån av våra adresser läggs till som cc...</li>
+                </ul>
+            </div>
+        </div>
+        <h1>Anmäl här om någon bryter mot din licens/upphovsrätt!</h1>
+        <p>Har du hittat en användning av ett verk du har laddat upp till Wikimedia Commons där licensen inte anges ordentligt?<br />
+        Då kan du använda nedanstående verktyg för att snabbt sätta ihop ett e-post meddelande till illdådaren.</p>
+        
+        <div id="filename_form">
+            <label>Filnamn:</label> <input type="text" id="filename" title="Den använda filens namn på Wikimedia Commons" placeholder="Foo.jpg" tabindex=1 required/>
+            <button id="button" class="button" tabindex=2>LookUp!</button>
+        </div>
+        <br />
+        <p id="reflect" class="problem"></p>
+        <br />
+        <div class="hidden form" id="post_lookup">
+            <div class="thumbDiv indent"><img id="thumb" title="Den använda bilden" alt="Den använda bilden"/></div><br />
+            <label>Titel:</label> <span id="pagename"><a></a></span><br />
+            <label>Licens:</label> <span id="license"><a></a></span><br />
+            <label>Användning:</label> <input type="text" id="usage" title="Var används filen på ett felaktigt sätt" placeholder="www.skvallerblaskan.se/hetasteNyheten/" tabindex=3 required/><br />
+            <label>Utgivare:</label> <input type="text" id="publisher" title="Vem är ansvarig för utgivningen (e-post)" placeholder="bild@skvallerblaskan.se" tabindex=4 /><br />
+            <label>Erkännande:</label> <input type="text" id="credit" title="Hur vill jag bli erkänd" class="to_preview" placeholder="Användarnamn" tabindex=5 required/> <span id="credit_preview" class="preview"></span><br />
+            <span id="credit_extra" class="indent cmt" title="Texten i fältet 'Källa' på Commons"></span><br />
+            <label>Uppladdningsdatum:</label> <input type="text" id="upload_date" title="Uppladdningsdatum (kan utelämnas)" placeholder="ÅÅÅÅ-MM-DD" tabindex=6 /><br />
+            <span id="upload_date_cmt" class="indent cmt"></span><br />
+            <label>Beskrivning:</label> <input type="text" id="descr" title="En kort beskrivning av bilden (kan utelämnas)" class="to_preview" placeholder="Jimmy Wales" tabindex=7 /> <span id="descr_preview" class="preview"></span><br />
+            <span id="descr_extra" class="indent cmt" title="Beskrivningen på filsidan"></span><br />
+            <input type="hidden" id="license_title" required/>
+            <input type="hidden" id="license_url" required/>
+            <input type="hidden" id="file_title" required/>
+            <input type="hidden" id="file_url" required/>
+            <label>Brevtyp:</label> <select id="letter_selector" title="Välj ett av de olika brevformaten" tabindex=8 required/></select><br />
+            <button id="button_write" class="button indent" tabindex=9 >Write!</button>
+        </div>
+        <br />
+        <br clear="all" />
+        <div id="brev" class="hidden">
+            <div id="brev_templated" class="brev"></div>
+            <button id="button_mailto" class="button" title="Skicka ovanstående till din e-postklient" tabindex=10 >Send!</button><br />
+            <div class="cmt">
+                Notera att all formatering tappas vid export genom ovanstående knapp.<br />
+                För att behålla formateringen bör du istället klistra in ovanstående i din e-postklient.
+            </div>
+        </div>
+        
+        <!-- Templates -->
+        <!-- Used for testing (real ones are in /templates) -->
+        <script type="text/html" id="template_basic">
+            <ul>
+                <li>Description: <span data-content="descr"></span></li>
+                <li>Usage: <span data-content="usage"></span></li>
+                <li>Upload date: <span data-content="upload_date"></span></li>
+                <li>file_url: <span data-content="file_url"></span></li>
+                <li>License_name: <span data-content="license_title"></span></li>
+                <li>License_url: <span data-content="license_url"></span></li>
+                <li>Example (online): <a data-content="file_title" data-href="file_url"></a> / <span data-content="credit"></span> / <a data-content="license_title" data-href="license_url"></a></li>
+                <li>Exempel (offline): <span data-content="file_title"></span> @ Wikimedia Commons / <span data-content-text="credit_plain"></span> / <span data-content="license_title"></span></li>
+            </ul>
+        </script>
+	</body>
+</html>

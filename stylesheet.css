@@ -1,0 +1,99 @@
+form {
+    display: inline-block;
+}
+
+.button{
+    display: inline-block;
+    height:20px;
+	width:70px;
+	background-color:#ABCDEF;
+    transition: background-color 0.5s ease;
+	font-family:arial;
+	font-weight:bold;
+	color:#ffffff;
+	border-radius: 5px;
+	text-align:center;
+	margin-top:2px;
+    border:none;
+}
+
+.thumbDiv{
+    float: left;
+    clear: all;
+}
+
+.brev{
+    border: 1px solid;
+}
+
+.hidden{
+    display: none;
+}
+
+.indent{
+    margin-left: 15%;
+}
+
+.cmt{
+    font-style: italic;
+    width: 40%;
+    display: inline-block;
+    float: left;
+    text-align: left;
+}
+
+.problem{
+    font-weight: bold;
+    color: red;
+}
+
+.collapse{
+    float: right;
+    border: 1px solid;
+}
+
+.examples{
+    display:none;
+}
+
+label{
+    display: inline-block;
+    float: left;
+    clear: left;
+    width: 15%;
+    text-align: right;
+    padding-right: 0.5em;
+}
+
+input {
+    display: inline-block;
+    float: left;
+    width: 20%;
+}
+
+.preview {
+    padding-left: 1em;
+    opacity: 0.75;
+}
+
+.form br {
+    clear: left;
+}
+
+.active{
+    -webkit-box-shadow: 0 0 8px #FFD700;
+    -moz-box-shadow: 0 0 8px #FFD700;
+    box-shadow: 0 0 8px #FFD700;
+    background-color:#556677;
+    cursor:pointer;
+}
+
+.highlighted{
+    -webkit-box-shadow: 0 0 8px #FF0000;
+    -moz-box-shadow: 0 0 8px #FF0000;
+    box-shadow: 0 0 8px #FF0000;
+}
+
+.warning{
+    background-color: #FFAAAA;
+}
