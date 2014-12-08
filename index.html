@@ -10,7 +10,7 @@
 	</head>
 	<body>
         <div class="collapse">
-            Examples:
+            Exempel:
             <div id="examples" class="examples">
                 <ul>
                     <li>No license: <a href="./index.html?filename=%22A_Basket%20full%20of%20Wool%22%20%286360159381%29.jpg"><tt>"A Basket full of Wool" (6360159381).jpg</tt></a></li>
@@ -18,15 +18,23 @@
                     <li>Multple creators: <a href="./index.html?filename=Foo.jpg"><tt>Foo.jpg</tt></a></li>
                     <li>Easy: <a href="./index.html?filename=Sempervivum%20x%20funckii,%20RBGE%202010,%202.jpg"><tt>Sempervivum x funckii, RBGE 2010, 2.jpg</tt></a></li>
                     <li>GFDL: <a href="./index.html?filename=0038-fahrradsammlung-RalfR.jpg"><tt>0038-fahrradsammlung-RalfR.jpg</tt></a></li>
+                    <li>CC0: <a href="./index.html?filename=Well-wikipedia2.svg"><tt>Well-wikipedia2.svg</tt></a></li>
+                    <li>Ingen info-mall: <a href="./index.html?filename=Ruins_at_Delfi.JPG"><tt>Ruins at Delfi.JPG</tt></a></li>
+                    
                 </ul>
                 <ul>
                     <li>kopiera texten-knapp</li>
                     <li>enter för att skicka filnamn</li>
-                    <li>inaktivera skicka-knapp om ingen utgivare</li>
+                    <li>inaktivera skicka-knapp om ingen utgivare (samma med övriga)</li>
                     <li>kolla formatering för utgivare</li>
                     <li>Välj brevtyp "Hur irriterad är du"</li>
                     <li>Hur ska det spridas?</li>
                     <li>Val att det registreras/att nån av våra adresser läggs till som cc...</li>
+                    <li>CC0 ska hanteras som ingen upphovsrätt</li>
+                    <li>Avsaknad av info-mall ska ge felmeddelande och uppmaning att fixa.</li>
+                    <li>Indikera vilka fält som krävs.</li>
+                    <li>Thumbnail även för bilder som strular.</li>
+                    <li>Faktisk mailadress i mailto</li>
                 </ul>
             </div>
         </div>
@@ -36,17 +44,17 @@
         
         <div id="filename_form">
             <label>Filnamn:</label> <input type="text" id="filename" title="Den använda filens namn på Wikimedia Commons" placeholder="Foo.jpg" tabindex=1 required/>
-            <button id="button" class="button" tabindex=2>LookUp!</button>
+            <button id="button" class="button" tabindex=2>Kolla!</button>
         </div>
         <br />
-        <p id="reflect" class="problem"></p>
+        <p id="reflect" class="problem indent"></p>
         <br />
         <div class="hidden form" id="post_lookup">
             <div class="thumbDiv indent"><img id="thumb" title="Den använda bilden" alt="Den använda bilden"/></div><br />
             <label>Titel:</label> <span id="pagename"><a></a></span><br />
             <label>Licens:</label> <span id="license"><a></a></span><br />
             <label>Användning:</label> <input type="text" id="usage" title="Var används filen på ett felaktigt sätt" placeholder="www.skvallerblaskan.se/hetasteNyheten/" tabindex=3 required/><br />
-            <label>Utgivare:</label> <input type="text" id="publisher" title="Vem är ansvarig för utgivningen (e-post)" placeholder="bild@skvallerblaskan.se" tabindex=4 /><br />
+            <label>Utgivare:</label> <input type="text" id="publisher" title="Vem är ansvarig för utgivningen (e-post)" placeholder="bild@skvallerblaskan.se" tabindex=4 /> <span id="publisher_preview" class="preview"></span><br />
             <label>Erkännande:</label> <input type="text" id="credit" title="Hur vill jag bli erkänd" class="to_preview" placeholder="Användarnamn" tabindex=5 required/> <span id="credit_preview" class="preview"></span><br />
             <span id="credit_extra" class="indent cmt" title="Texten i fältet 'Källa' på Commons"></span><br />
             <label>Uppladdningsdatum:</label> <input type="text" id="upload_date" title="Uppladdningsdatum (kan utelämnas)" placeholder="ÅÅÅÅ-MM-DD" tabindex=6 /><br />
@@ -58,13 +66,13 @@
             <input type="hidden" id="file_title" required/>
             <input type="hidden" id="file_url" required/>
             <label>Brevtyp:</label> <select id="letter_selector" title="Välj ett av de olika brevformaten" tabindex=8 required/></select><br />
-            <button id="button_write" class="button indent" tabindex=9 >Write!</button>
+            <button id="button_write" class="button indent" tabindex=9 >Skriv!</button>
         </div>
         <br />
         <br clear="all" />
         <div id="brev" class="hidden">
             <div id="brev_templated" class="brev"></div>
-            <button id="button_mailto" class="button" title="Skicka ovanstående till din e-postklient" tabindex=10 >Send!</button><br />
+            <button id="button_mailto" class="button" title="Skicka ovanstående till din e-postklient" tabindex=10 >Skicka!</button><br />
             <div class="cmt">
                 Notera att all formatering tappas vid export genom ovanstående knapp.<br />
                 För att behålla formateringen bör du istället klistra in ovanstående i din e-postklient.
