@@ -5,10 +5,11 @@ var letters = {
     "basic.html": "test"
 };
 var messages = {
-    "no_license": "License: Kunde inte få ut en licens ur filsidan, fixa den och försök igen.",
-    "upload_date_cmt": "Notera att det automatiska datumet är det för den senaste uppladdningen",
-    "unsupported_license": "Detta är inte en av de licenser som stöds, de krav som specificeras i brevet kan därför vara inkorrekta.",
-    "public_domain": "Licens: Denna filen verkar vara public domain (dvs. inte upphovsrättsligt skyddad)",
+    "no_license": "Kunde inte få ut en licens från filsidan. Vänligen fixa filsidan och försök igen.",
+    "upload_date_cmt": "Notera att det automatiska datumet är det för den senaste uppladdningen.",
+    "unsupported_license": "Denna filen har tyvärr en licens som för närvarande inte stöds av verktyget.",
+    "public_domain": "Denna filen verkar vara public domain (dvs. inte upphovsrättsligt skyddad). Ingen anmälan är därmed möjlig.",
+    "CC0": "Denna filen verkar ha licensierats under CC0 vilket innebär att den är i public domain (dvs. inte upphovsrättsligt skyddad). Ingen anmälan är därmed möjlig.",
     "missing_file": "Kunde inte hitta filen, är du säker på att du angav rätt filnamn?",
     "random_url": "Vänligen ange namnet på en fil på Wikimedia Commons (detta verkar vara en url någon annanstans).",
     "missing_parameter": "Följande krävda fält saknas: ",
@@ -17,7 +18,7 @@ var messages = {
 };
 $(document).ready(function() {
     // load filename from url
-    var urlFilename = GetURLParameter('filename');
+    var urlFilename = getURLParameter('filename');
     if (urlFilename) {
         $('#filename').val(urlFilename);
     }
@@ -66,43 +67,14 @@ $(document).ready(function() {
             $('#button_mailto').attr("disabled", true);
         }
     });
-    // look up info on commons
+    // on enter or clicking button, look up info on Commons
+    $('#filename').keypress(function(e) {
+        if(e.which == 13) {
+            processFilename();
+        }
+    });
     $('#button').click(function() {
-        $('#reflect').empty();
-        $('#brev').addClass('hidden');
-        $('#post_lookup').addClass('hidden');
-        var run = true;
-        var input = $('#filename').val();
-        if (input === ''){
-            $('input').addClass('highlighted');
-            run = false;
-        }
-        else if ( input.match(/([^.]*).wiki(p|m)edia.org\/wiki\/([^:])/gi) ) {
-            input = decodeURIComponent(
-                        input.split('/wiki/')[1].split(':')[1])
-                    .replace('_', ' ');
-            $('#filename').val(input);
-        }
-        else if (input.indexOf('://') >= 0) {
-            $('input').addClass('highlighted');
-            $('#reflect').html(messages.random_url);
-            run = false;
-        }
-        else if (input.indexOf(':') >= 0) {
-            $('#filename').val(input.split(':')[1]);
-        }
-        if (run) {
-            input = $('#filename').val();
-            $('input').removeClass('highlighted');
-            button_text = $('#button').html(); //because I don't want to hardcode value
-            $('#button').html("loading...");
-            $.getJSON("https://commons.wikimedia.org/w/api.php?action=query&prop=imageinfo&format=json&iiprop=url|timestamp|extmetadata&iilimit=1&iiurlwidth=" +
-                      thumbsize +
-                      "&iiextmetadatafilter=Credit|ImageDescription|Artist|LicenseShortName|UsageTerms|LicenseUrl|Copyrighted&titles=File%3A" +
-                      input +
-                      "&callback=?",
-                parseMetadata);
-        }
+        processFilename();
     });
     // compose letter
     $('#button_write').click(function() {
@@ -119,18 +91,18 @@ $(document).ready(function() {
                 $(this).removeClass('warning');
             }
         });
-        
+
         if (!run) {
             return false;
         }
-        
+
         // read values
         var credit = $('#credit').val();
         var descr = $('#descr').val();
         var upload_date = $('#upload_date').val();
         var publisher = $('#publisher').val();
         // $('#publisher').val();
-        
+
         // parse
         if (descr !== ''){
             descr = "på " + descr;
@@ -138,7 +110,7 @@ $(document).ready(function() {
         if (upload_date !== ''){
             upload_date = "sedan " + upload_date;
         }
-        
+
         // output
         $('#brev_templated').loadTemplate("#template_basic", // load local
         //$('#brev_templated').loadTemplate("./templates/" + $('#letter_selector').val(),
@@ -156,7 +128,7 @@ $(document).ready(function() {
         // make brev visible
         $('#brev').removeClass('hidden');
     });
-    
+
     $('#button_mailto').click(function() {
         var subject = messages.subject;
         console.log($('#brev_templated').text());
@@ -169,53 +141,109 @@ $(document).ready(function() {
     });
 });
 
+// Validate filename and request info from Commons
+function processFilename() {
+    // reset later fields
+    $('#reflect').empty();
+    $('#brev').addClass('hidden');
+    $('.thumbDiv').addClass('hidden');
+    $('#post_lookup').addClass('hidden');
+
+    // test filename
+    var run = true;
+    var input = $('#filename').val();
+    if (input === ''){
+        $('#filename').addClass('highlighted');
+        run = false;
+    }
+    else if ( input.match(/([^.]*).wiki(p|m)edia.org\/wiki\/([^:])/gi) ) {
+        input = decodeURIComponent(
+                    input.split('/wiki/')[1].split(':')[1])
+                .replace('_', ' ');
+        $('#filename').val(input);
+    }
+    else if (input.indexOf('://') >= 0) {
+        $('#filename').addClass('highlighted');
+        $('#reflect').html(messages.random_url);
+        run = false;
+    }
+    else if (input.indexOf(':') >= 0) {
+        $('#filename').val(input.split(':')[1]);
+    }
+
+    // run if filename is likely to be valid
+    if (run) {
+        input = $('#filename').val();
+        $('#filename').removeClass('highlighted');
+        button_text = $('#button').html(); //because I don't want to hardcode value
+        $('#button').html("loading...");
+        $.getJSON("https://commons.wikimedia.org/w/api.php?action=query&prop=imageinfo&format=json&iilimit=1" +
+                  "&iiprop=url|timestamp|extmetadata" +
+                  "&iiurlwidth=" + thumbsize +
+                  "&iiextmetadatafilter=Credit|ImageDescription|Artist|LicenseShortName|UsageTerms|LicenseUrl|Copyrighted" +
+                  "&titles=File%3A" + input +
+                  "&callback=?",
+            parseMetadata);
+    }
+}
+
+// parse the metadata response from Commons
 function parseMetadata(response) {
     $('#button').html(button_text);
     $.each(response.query.pages, function(key, value) {
         if ("missing" in value) {
-            $('input').addClass('highlighted');
+            $('#filename').addClass('highlighted');
             $('#reflect').html(messages.missing_file);
         }
         else {
-            
-            
+            // display image independent on later errors
+            $('#thumb').attr("src", value.imageinfo[0].thumburl);
+            $('#thumb').attr("width", thumbsize);
+            $('.thumbDiv').removeClass('hidden');
+            $('.thumbDiv a').attr("href", value.imageinfo[0].descriptionurl);
+
             var extmetadata = value.imageinfo[0].extmetadata;
             if ("Copyrighted" in extmetadata && extmetadata.Copyrighted.value == "False") {
                 $("#reflect").append(messages.public_domain);
             }
             else if ("LicenseUrl" in extmetadata && "LicenseShortName" in extmetadata) {
                 // formatting
+                render = false;
                 var lic = value.imageinfo[0].extmetadata.LicenseShortName.value;
                 if(lic.indexOf('CC-BY-SA-') === 0) {
                     lic = "CC BY-SA " + lic.slice(9);
+                    render = true;
                 }
                 else if (lic.indexOf('CC-BY-') === 0) {
                     lic = "CC BY " + lic.slice(6);
+                    render = true;
+                }
+                else if (lic.indexOf('CC0') === 0) {
+                    $("#reflect").append(messages.CC0);
                 }
                 else {
                     $("#reflect").append(messages.unsupported_license);
                 }
-                
+
                 // output
-                addInput({
-                    title: "<a href=\"" + value.imageinfo[0].descriptionurl + "\">" + value.title +"</a><br />",
-                    usage: "",
-                    credit: extmetadata.Artist.value,
-                    credit_extra: extmetadata.Credit.value+"<br />",
-                    descr: "",
-                    descr_extra: unwrapAll(extmetadata.ImageDescription.value)+"<br />",
-                    upload_date: value.imageinfo[0].timestamp.slice(0,10),
-                    upload_date_cmt: messages.upload_date_cmt + "<br />",
-                    license_title: lic,
-                    license_url: value.imageinfo[0].extmetadata.LicenseUrl.value,
-                    file_title: value.title.slice(5),
-                    file_url: value.imageinfo[0].descriptionurl,
-                    thumburl: value.imageinfo[0].thumburl,
-                    thumbsize: thumbsize,
-                    publisher: ""
-                    });
-                // make post_lookup_templated visible
-                $('#post_lookup').removeClass('hidden');
+                if (render) {
+                    addInput({
+                        usage: "",
+                        credit: extmetadata.Artist.value,
+                        credit_extra: extmetadata.Credit.value+"<br />",
+                        descr: "",
+                        descr_extra: unwrapAll(extmetadata.ImageDescription.value)+"<br />",
+                        upload_date: value.imageinfo[0].timestamp.slice(0,10),
+                        upload_date_cmt: messages.upload_date_cmt + "<br />",
+                        license_title: lic,
+                        license_url: value.imageinfo[0].extmetadata.LicenseUrl.value,
+                        file_title: value.title.slice(5),
+                        file_url: value.imageinfo[0].descriptionurl,
+                        publisher: ""
+                        });
+                    // make post_lookup_templated visible
+                    $('#post_lookup').removeClass('hidden');
+                }
             }
             else {
                 $("#reflect").append(messages.no_license);
@@ -224,6 +252,7 @@ function parseMetadata(response) {
     });
 }
 
+// cannot load this as a template but externalising to make neater
 function addInput(data) {
     $('#pagename a').attr("href", data.file_url);
     $('#pagename a').html(data.file_title);
@@ -242,18 +271,17 @@ function addInput(data) {
     $('#descr').val(data.descr);
     $('#descr_preview').html(data.descr);
     $('#descr_extra').html(data.descr_extra);
-    $('#thumb').attr("src", data.thumburl);
-    $('#thumb').attr("width", data.thumbsize);
     $('#publisher').val(data.publisher);
     // populate selector
     $('#letter_selector').empty();
     $.each(letters, function(key, value) {
         $('#letter_selector')
             .append($('<option>', { value : key })
-            .text(value)); 
+            .text(value));
     });
 }
 
+// unwraps all html tags in the sent data
 function unwrapAll(data) {
     var $tmp = $('<div />', {
             html: data
@@ -262,7 +290,8 @@ function unwrapAll(data) {
     return $tmp.html();
 }
 
-function GetURLParameter(param) {
+// returns the named url parameter
+function getURLParameter(param) {
     var pageURL = decodeURIComponent(window.location.search.substring(1));
     var urlVariables = pageURL.split('&');
     for (var i = 0; i < urlVariables.length; i++) {

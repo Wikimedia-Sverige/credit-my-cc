@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<title>Bryter någon mot din licens?</title>
-        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
         <link rel='stylesheet' type='text/css' href='stylesheet.css'/>
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
         <script type="text/javascript" src="./jquery.loadTemplate-1.4.5.min.js"></script>
@@ -20,34 +20,32 @@
                     <li>GFDL: <a href="./index.html?filename=0038-fahrradsammlung-RalfR.jpg"><tt>0038-fahrradsammlung-RalfR.jpg</tt></a></li>
                     <li>CC0: <a href="./index.html?filename=Well-wikipedia2.svg"><tt>Well-wikipedia2.svg</tt></a></li>
                     <li>Ingen info-mall: <a href="./index.html?filename=Ruins_at_Delfi.JPG"><tt>Ruins at Delfi.JPG</tt></a></li>
-                    
                 </ul>
                 <ul>
                     <li>kopiera texten-knapp</li>
-                    <li>enter för att skicka filnamn</li>
                     <li>Välj brevtyp "Hur irriterad är du"</li>
                     <li>Hur ska det spridas?</li>
                     <li>Val att det registreras/att nån av våra adresser läggs till som cc...</li>
-                    <li>CC0 ska hanteras som ingen upphovsrätt</li>
-                    <li>Avsaknad av info-mall ska ge felmeddelande och uppmaning att fixa.</li>
                     <li>Indikera vilka fält som krävs.</li>
-                    <li>Thumbnail även för bilder som strular.</li>
                 </ul>
             </div>
         </div>
         <h1>Anmäl här om någon bryter mot din licens/upphovsrätt!</h1>
         <p>Har du hittat en användning av ett verk du har laddat upp till Wikimedia Commons där licensen inte anges ordentligt?<br />
         Då kan du använda nedanstående verktyg för att snabbt sätta ihop ett e-post meddelande till illdådaren.</p>
-        
+
         <div id="filename_form">
             <label>Filnamn:</label> <input type="text" id="filename" title="Den använda filens namn på Wikimedia Commons" placeholder="Foo.jpg" tabindex=1 required/>
             <button id="button" class="button" tabindex=2>Kolla!</button>
         </div>
         <br />
+        <div class="thumbDiv indent hidden">
+            <a><img id="thumb" title="Den använda bilden" alt="Den använda bilden"/></a>
+        </div>
+        <br clear="all"/>
         <p id="reflect" class="problem indent"></p>
         <br />
         <div class="hidden form" id="post_lookup">
-            <div class="thumbDiv indent"><img id="thumb" title="Den använda bilden" alt="Den använda bilden"/></div><br />
             <label>Titel:</label> <span id="pagename"><a></a></span><br />
             <label>Licens:</label> <span id="license"><a></a></span><br />
             <label>Användning:</label> <input type="text" id="usage" title="Var används filen på ett felaktigt sätt" placeholder="www.skvallerblaskan.se/hetasteNyheten/" tabindex=3 required/><br />
@@ -75,7 +73,7 @@
                 För att behålla formateringen bör du istället klistra in ovanstående i din e-postklient.
             </div>
         </div>
-        
+
         <!-- Templates -->
         <!-- Used for testing (real ones are in /templates) -->
         <script type="text/html" id="template_basic">
