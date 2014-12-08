@@ -4,6 +4,17 @@ var letters = {
     "first.html": "Jans",
     "basic.html": "test"
 };
+var messages = {
+    "no_license": "License: Kunde inte få ut en licens ur filsidan, fixa den och försök igen.",
+    "upload_date_cmt": "Notera att det automatiska datumet är det för den senaste uppladdningen",
+    "unsupported_license": "Detta är inte en av de licenser som stöds, de krav som specificeras i brevet kan därför vara inkorrekta.",
+    "public_domain": "Licens: Denna filen verkar vara public domain (dvs. inte upphovsrättsligt skyddad)",
+    "missing_file": "Kunde inte hitta filen, är du säker på att du angav rätt filnamn?",
+    "random_url": "Vänligen ange namnet på en fil på Wikimedia Commons (detta verkar vara en url någon annanstans).",
+    "missing_parameter": "Följande krävda fält saknas: ",
+    "subject": "Felaktig användning av mitt verk",
+    "not_an_email": "Det angivna värdet ser inte ut som en e-postadress."
+};
 $(document).ready(function() {
     // load filename from url
     var urlFilename = GetURLParameter('filename');
@@ -19,7 +30,7 @@ $(document).ready(function() {
             $(this).toggleClass('active');
         }
     );
-    //collapse examples
+    // collapse examples
     $('.collapse').click(function(){
         $('.examples').slideToggle('slow');
     });
@@ -28,6 +39,32 @@ $(document).ready(function() {
         var content = $(this).val();
         var previewId = "#" + $(this).attr('id') + "_preview";
         $(previewId).html(content);
+    });
+    // handle invalid or missing publisher e-mail
+    $('#publisher').focusout(function() {
+        var content = $(this).val();
+        var previewId = "#" + $(this).attr('id') + "_preview";
+        $(previewId).removeClass('problem');
+        if (content !== ''){
+            ok = false;
+            if (content.indexOf('@') > 0) {
+                if (content.indexOf('.', content.indexOf('@')) > 0) {
+                    ok = true;
+                }
+            }
+            if (ok) {
+                $(previewId).html(content);
+                $('#button_mailto').prop("disabled", false);
+            }
+            else {
+                $(previewId).addClass('problem');
+                $(previewId).html(messages.not_an_email);
+                $('#button_mailto').prop("disabled", true);
+            }
+        }
+        else {
+            $('#button_mailto').attr("disabled", true);
+        }
     });
     // look up info on commons
     $('#button').click(function() {
@@ -48,7 +85,7 @@ $(document).ready(function() {
         }
         else if (input.indexOf('://') >= 0) {
             $('input').addClass('highlighted');
-            $('#reflect').html("Vänligen ange namnet på en fil på Wikimedia Commons (detta verkar vara en url någon annanstans).");
+            $('#reflect').html(messages.random_url);
             run = false;
         }
         else if (input.indexOf(':') >= 0) {
@@ -75,7 +112,7 @@ $(document).ready(function() {
         $('#post_lookup').find('input').each(function() {
             if($(this).prop('required') && !$(this).val()){
                 $(this).addClass('warning');
-                $('#reflect').html("The required field \"" + $(this).attr('id') + "\" is missing");
+                $('#reflect').html(messages.missing_parameter + $(this).attr('id'));
                 run = false;
             }
             else {
@@ -91,6 +128,7 @@ $(document).ready(function() {
         var credit = $('#credit').val();
         var descr = $('#descr').val();
         var upload_date = $('#upload_date').val();
+        var publisher = $('#publisher').val();
         // $('#publisher').val();
         
         // parse
@@ -120,9 +158,11 @@ $(document).ready(function() {
     });
     
     $('#button_mailto').click(function() {
-        var subject = "Felaktig användning av mitt verk";
+        var subject = messages.subject;
         console.log($('#brev_templated').text());
-        window.open("mailto:address@dmail.com?subject=" +
+        window.open("mailto:" +
+                    $('#publisher').val() +
+                    "?subject=" +
                     subject +
                     "&body=" +
                     encodeURIComponent($('#brev_templated').text()) , '_blank');
@@ -134,12 +174,14 @@ function parseMetadata(response) {
     $.each(response.query.pages, function(key, value) {
         if ("missing" in value) {
             $('input').addClass('highlighted');
-            $('#reflect').html("Couldn't find the file, Are you sure you got it right?");
+            $('#reflect').html(messages.missing_file);
         }
         else {
+            
+            
             var extmetadata = value.imageinfo[0].extmetadata;
             if ("Copyrighted" in extmetadata && extmetadata.Copyrighted.value == "False") {
-                $("#reflect").append("<span>License: The file does not appear to be copyrighted</span>");
+                $("#reflect").append(messages.public_domain);
             }
             else if ("LicenseUrl" in extmetadata && "LicenseShortName" in extmetadata) {
                 // formatting
@@ -151,7 +193,7 @@ function parseMetadata(response) {
                     lic = "CC BY " + lic.slice(6);
                 }
                 else {
-                    $("#reflect").append("This is not one of the supported licenses, the requirements specified in the letter may therefore be incorrect");
+                    $("#reflect").append(messages.unsupported_license);
                 }
                 
                 // output
@@ -163,7 +205,7 @@ function parseMetadata(response) {
                     descr: "",
                     descr_extra: unwrapAll(extmetadata.ImageDescription.value)+"<br />",
                     upload_date: value.imageinfo[0].timestamp.slice(0,10),
-                    upload_date_cmt: "Notera att det automatiska datumet är det för den senaste uppladdningen<br />",
+                    upload_date_cmt: messages.upload_date_cmt + "<br />",
                     license_title: lic,
                     license_url: value.imageinfo[0].extmetadata.LicenseUrl.value,
                     file_title: value.title.slice(5),
@@ -176,7 +218,7 @@ function parseMetadata(response) {
                 $('#post_lookup').removeClass('hidden');
             }
             else {
-                $("#reflect").append("<span>License: Could not extract license from file</span>");
+                $("#reflect").append(messages.no_license);
             }
         }
     });
