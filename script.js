@@ -137,7 +137,7 @@ $(document).ready(function() {
 
     // ctrl+c, mac+c putts letter in clipboard
     $(document).keydown(function(e) {
-        // check that ctrl (or mac equiv) is pressed and that 
+        // check that ctrl (or mac equiv) is pressed and that
         // there is some content to be copied
         if ($('#letter_templated').text() === '' || !(e.ctrlKey || e.metaKey)) {
             return;
@@ -328,7 +328,7 @@ function getURLParameter(param) {
 // Heavily influenced by Daniels answer to stackoverflow.com/questions/17527870
 function selectMe($origin) {
     $('#clipboard').html($origin.html());
-    
+
     // check that nothing else was selected then select
     // needs to deal with IE and Moz differently
     if (window.getSelection()) {
