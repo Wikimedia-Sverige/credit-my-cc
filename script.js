@@ -41,6 +41,12 @@ $(document).ready(function() {
         var previewId = "#" + $(this).attr('id') + "_preview";
         $(previewId).html(content);
     });
+    $('input').each(function() {
+        if ($(this).prop('required') && $(this).attr('type') != 'hidden') {
+            console.log($(this).attr('id'));
+            $(this).after("<span class=\"problem\">*</span>");
+        }
+    });
     // handle invalid or missing publisher e-mail
     $('#publisher').focusout(function() {
         var content = $(this).val();
