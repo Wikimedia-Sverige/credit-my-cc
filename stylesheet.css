@@ -22,7 +22,7 @@ form {
     clear: all;
 }
 
-.brev{
+.letter{
     border: 1px solid;
 }
 
@@ -96,4 +96,14 @@ input {
 
 .warning{
     background-color: #FFAAAA;
+}
+
+#clipboard {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  width: 0px;
+  height: 0px;
+  z-index: 100;
+  opacity: 0;
 }

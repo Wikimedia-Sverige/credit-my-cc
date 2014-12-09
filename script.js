@@ -41,9 +41,9 @@ $(document).ready(function() {
         var previewId = "#" + $(this).attr('id') + "_preview";
         $(previewId).html(content);
     });
+    // add asterisk next to any required input field
     $('input').each(function() {
         if ($(this).prop('required') && $(this).attr('type') != 'hidden') {
-            console.log($(this).attr('id'));
             $(this).after("<span class=\"problem\">*</span>");
         }
     });
@@ -118,8 +118,8 @@ $(document).ready(function() {
         }
 
         // output
-        $('#brev_templated').loadTemplate("#template_basic", // load local
-        //$('#brev_templated').loadTemplate("./templates/" + $('#letter_selector').val(),
+        $('#letter_templated').loadTemplate("#template_basic", // load local
+        //$('#letter_templated').loadTemplate("./templates/" + $('#letter_selector').val(),
             {
                 descr: descr,
                 usage: $('#usage').val(),
@@ -131,19 +131,60 @@ $(document).ready(function() {
                 credit: credit,
                 credit_plain: unwrapAll(credit)
             });
-        // make brev visible
-        $('#brev').removeClass('hidden');
+        // make letter visible
+        $('#letter').removeClass('hidden');
     });
 
+    // workaround for automatically copy pasting content of letter into
+    // the clipboard. Heavily influenced by Daniels answer to
+    // stackoverflow.com/questions/17527870
+    $(document).keydown(function(e) {
+        // check that ctrl (or mac equiv) is pressed and that there is some content
+        if ($('#letter_templated').text() === '' || !(e.ctrlKey || e.metaKey)) {
+            return;
+        }
+        // check that nothing else was selected (separating IE and Moz)
+        if (window.getSelection()) {
+            if (window.getSelection().toString()){
+                return;
+            }
+        }
+        else if (document.selection) {
+            if (document.selection.createRange().text) {
+                return;
+            }
+        }
+        // copy contents into hidden div and set as selected
+        // again separating IE and Moz
+        $('#clipboard').html($('#letter_templated').html());
+        if (document.body.createTextRange) {
+            var range = document.body.createTextRange();
+            range.moveToElementText($('#clipboard')[0]);
+            range.select();
+        } else if (window.getSelection) {
+            var selection = window.getSelection();
+            var range = document.createRange();
+            range.selectNodeContents($('#clipboard')[0]);
+            selection.removeAllRanges();
+            selection.addRange(range);
+        }
+    });
+    // empty clipboard once ctrl is released
+    $(document).keyup(function(e) {
+        if ($(e.target).is("#clipboard")) {
+            $("#clipboard").empty();
+        }
+    });
+
+    // send mail on mailto
     $('#button_mailto').click(function() {
         var subject = messages.subject;
-        console.log($('#brev_templated').text());
         window.open("mailto:" +
                     $('#publisher').val() +
                     "?subject=" +
                     subject +
                     "&body=" +
-                    encodeURIComponent($('#brev_templated').text()) , '_blank');
+                    encodeURIComponent($('#letter_templated').text()) , '_blank');
     });
 });
 
@@ -151,7 +192,7 @@ $(document).ready(function() {
 function processFilename() {
     // reset later fields
     $('#reflect').empty();
-    $('#brev').addClass('hidden');
+    $('#letter').addClass('hidden');
     $('.thumbDiv').addClass('hidden');
     $('#post_lookup').addClass('hidden');
 

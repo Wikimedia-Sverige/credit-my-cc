@@ -22,7 +22,6 @@
                     <li>Ingen info-mall: <a href="./index.html?filename=Ruins_at_Delfi.JPG"><tt>Ruins at Delfi.JPG</tt></a></li>
                 </ul>
                 <ul>
-                    <li>kopiera texten-knapp (för att unvika flash kan <a href="http://stackoverflow.com/questions/17527870/how-does-trello-access-the-users-clipboard">trellos lösning</a> användas.</li>
                     <li>Välj brevtyp "Hur irriterad är du"</li>
                     <li>Hur ska det spridas?</li>
                     <li>Val att det registreras/att nån av våra adresser läggs till som cc..?</li>
@@ -64,14 +63,16 @@
         </div>
         <br />
         <br clear="all" />
-        <div id="brev" class="hidden">
-            <div id="brev_templated" class="brev"></div>
+        <div id="letter" class="hidden">
+            <div id="copy_me">Kopiera text och formatering genom att trycka <b>ctrl + c</b> eller <b>⌘ + c</b>.</div>
+            <div id="letter_templated" class="letter"></div>
             <button id="button_mailto" class="button" title="Skicka ovanstående till din e-postklient" tabindex=10 >Skicka!</button><br />
             <div class="cmt">
                 Notera att all formatering tappas vid export genom ovanstående knapp.<br />
                 För att behålla formateringen bör du istället klistra in ovanstående i din e-postklient.
             </div>
         </div>
+        <div id="clipboard"></div><!-- Hidden dive for simplified copy-pasting -->
 
         <!-- Templates -->
         <!-- Used for testing (real ones are in /templates) -->
