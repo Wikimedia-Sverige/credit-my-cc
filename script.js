@@ -135,39 +135,14 @@ $(document).ready(function() {
         $('#letter').removeClass('hidden');
     });
 
-    // workaround for automatically copy pasting content of letter into
-    // the clipboard. Heavily influenced by Daniels answer to
-    // stackoverflow.com/questions/17527870
+    // ctrl+c, mac+c putts letter in clipboard
     $(document).keydown(function(e) {
-        // check that ctrl (or mac equiv) is pressed and that there is some content
+        // check that ctrl (or mac equiv) is pressed and that 
+        // there is some content to be copied
         if ($('#letter_templated').text() === '' || !(e.ctrlKey || e.metaKey)) {
             return;
         }
-        // check that nothing else was selected (separating IE and Moz)
-        if (window.getSelection()) {
-            if (window.getSelection().toString()){
-                return;
-            }
-        }
-        else if (document.selection) {
-            if (document.selection.createRange().text) {
-                return;
-            }
-        }
-        // copy contents into hidden div and set as selected
-        // again separating IE and Moz
-        $('#clipboard').html($('#letter_templated').html());
-        if (document.body.createTextRange) {
-            var range = document.body.createTextRange();
-            range.moveToElementText($('#clipboard')[0]);
-            range.select();
-        } else if (window.getSelection) {
-            var selection = window.getSelection();
-            var range = document.createRange();
-            range.selectNodeContents($('#clipboard')[0]);
-            selection.removeAllRanges();
-            selection.addRange(range);
-        }
+        selectMe($('#letter_templated'));
     });
     // empty clipboard once ctrl is released
     $(document).keyup(function(e) {
@@ -346,5 +321,32 @@ function getURLParameter(param) {
         if (parameterName[0] == param) {
             return parameterName[1];
         }
+    }
+}
+
+// copies the given div into the hidden clipboard and selects it
+// Heavily influenced by Daniels answer to stackoverflow.com/questions/17527870
+function selectMe($origin) {
+    $('#clipboard').html($origin.html());
+    
+    // check that nothing else was selected then select
+    // needs to deal with IE and Moz differently
+    if (window.getSelection()) {
+        if (window.getSelection().toString()){
+            return;
+        }
+        var selection = window.getSelection();
+        var rangeMoz = document.createRange();
+        rangeMoz.selectNodeContents($('#clipboard')[0]);
+        selection.removeAllRanges();
+        selection.addRange(rangeMoz);
+    }
+    else if (document.selection) {
+        if (document.selection.createRange().text) {
+            return;
+        }
+        var rangeIE = document.body.createTextRange();
+        rangeIE.moveToElementText($('#clipboard')[0]);
+        rangeIE.select();
     }
 }
