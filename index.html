@@ -38,13 +38,11 @@
             <button id="button" class="button" tabindex=2>Kolla!</button>
         </div>
         <br />
-        <div class="thumbDiv indent hidden">
+        <div id="thumbDiv" class="thumbDiv clear indent hidden">
             <a><img id="thumb" title="Den använda bilden" alt="Den använda bilden"/></a>
         </div>
-        <br clear="all"/>
-        <p id="reflect" class="problem indent"></p>
-        <br />
-        <div class="hidden form" id="post_lookup">
+        <p id="reflect" class="clear problem indent"></p>
+        <div id="post_lookup" class="hidden form">
             <label>Titel:</label> <span id="pagename"><a></a></span><br />
             <label>Licens:</label> <span id="license"><a></a></span><br />
             <label>Användning:</label> <input type="text" id="usage" title="Var används filen på ett felaktigt sätt" placeholder="www.skvallerblaskan.se/hetasteNyheten/" tabindex=3 required/><br />
@@ -63,9 +61,8 @@
             <button id="button_write" class="button indent" tabindex=9 >Skriv!</button>
         </div>
         <br />
-        <br clear="all" />
-        <div id="letter" class="hidden">
-            <div id="copy_me">Kopiera text och formatering genom att trycka <b>ctrl + c</b> eller <b>⌘ + c</b>.</div>
+        <div id="letter" class="clear hidden">
+            <div id="copy_me">Kopiera text och formatering genom att trycka <b>ctrl + c</b> eller <b>⌘ + c</b> (du behöver inte markera texten).</div>
             <div id="letter_templated" class="letter"></div>
             <button id="button_mailto" class="button" title="Skicka ovanstående till din e-postklient" tabindex=10 >Skicka!</button><br />
             <div class="cmt">
@@ -73,7 +70,7 @@
                 För att behålla formateringen bör du istället klistra in ovanstående i din e-postklient.
             </div>
         </div>
-        <div id="clipboard"></div><!-- Hidden dive for simplified copy-pasting -->
+        <div id="clipboard" class="clipboard"></div><!-- Hidden div for simplified copy-pasting -->
 
         <!-- Templates -->
         <!-- Used for testing (real ones are in /templates) -->

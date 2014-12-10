@@ -1,5 +1,6 @@
 form {
     display: inline-block;
+    clear: both;
 }
 
 .button{
@@ -19,7 +20,10 @@ form {
 
 .thumbDiv{
     float: left;
-    clear: all;
+}
+
+.clear {
+    clear: both;
 }
 
 .letter{
@@ -37,7 +41,6 @@ form {
 .cmt{
     font-style: italic;
     width: 40%;
-    display: inline-block;
     float: left;
     text-align: left;
 }
@@ -57,7 +60,6 @@ form {
 }
 
 label{
-    display: inline-block;
     float: left;
     clear: left;
     width: 15%;
@@ -66,7 +68,6 @@ label{
 }
 
 input {
-    display: inline-block;
     float: left;
     width: 20%;
 }
@@ -98,12 +99,12 @@ input {
     background-color: #FFAAAA;
 }
 
-#clipboard {
-  position: fixed;
-  left: 0px;
-  top: 0px;
-  width: 0px;
-  height: 0px;
-  z-index: 100;
-  opacity: 0;
+.clipboard {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 0;
+    z-index: 100;
+    opacity: 0;
 }

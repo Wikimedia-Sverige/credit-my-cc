@@ -5,11 +5,12 @@ var letters = {
     "basic.html": "test"
 };
 var messages = {
-    "no_license": "Kunde inte få ut en licens från filsidan. Vänligen fixa filsidan och försök igen.",
+    "no_license": "Filsidan verkar sakna maskinläsbar licens.<br /> Vänligen fixa filsidan och försök igen.",
+    "no_information": "Filsidan verkar sakna maskinläsbar metadata om skapare eller ett annat nödvänfigt fält.<br /> Lägg till en Information-mall på sidan och försök igen.",
     "upload_date_cmt": "Notera att det automatiska datumet är det för den senaste uppladdningen.",
     "unsupported_license": "Denna filen har tyvärr en licens som för närvarande inte stöds av verktyget.",
-    "public_domain": "Denna filen verkar vara public domain (dvs. inte upphovsrättsligt skyddad). Ingen anmälan är därmed möjlig.",
-    "CC0": "Denna filen verkar ha licensierats under CC0 vilket innebär att den är i public domain (dvs. inte upphovsrättsligt skyddad). Ingen anmälan är därmed möjlig.",
+    "public_domain": "Denna filen verkar vara public domain (dvs. inte upphovsrättsligt skyddad).<br /> Ingen anmälan är därmed möjlig.",
+    "CC0": "Denna filen verkar ha licensierats under CC0 vilket innebär att den är i public domain (dvs. inte upphovsrättsligt skyddad).<br /> Ingen anmälan är därmed möjlig.",
     "missing_file": "Kunde inte hitta filen, är du säker på att du angav rätt filnamn?",
     "random_url": "Vänligen ange namnet på en fil på Wikimedia Commons (detta verkar vara en url någon annanstans).",
     "missing_parameter": "Följande krävda fält saknas: ",
@@ -25,10 +26,12 @@ $(document).ready(function() {
     // responsive buttons
     $('.button').hover(
         function() {
-            $(this).toggleClass('active');
+            if (!$(this).prop("disabled")) {
+                $(this).addClass('active');
+            }
         },
         function() {
-            $(this).toggleClass('active');
+            $(this).removeClass('active');
         }
     );
     // collapse examples
@@ -168,7 +171,7 @@ function processFilename() {
     // reset later fields
     $('#reflect').empty();
     $('#letter').addClass('hidden');
-    $('.thumbDiv').addClass('hidden');
+    $('#thumbDiv').addClass('hidden');
     $('#post_lookup').addClass('hidden');
 
     // test filename
@@ -221,8 +224,8 @@ function parseMetadata(response) {
             // display image independent on later errors
             $('#thumb').attr("src", value.imageinfo[0].thumburl);
             $('#thumb').attr("width", thumbsize);
-            $('.thumbDiv').removeClass('hidden');
-            $('.thumbDiv a').attr("href", value.imageinfo[0].descriptionurl);
+            $('#thumbDiv a').attr("href", value.imageinfo[0].descriptionurl);
+            $('#thumbDiv').removeClass('hidden');
 
             var extmetadata = value.imageinfo[0].extmetadata;
             if ("Copyrighted" in extmetadata && extmetadata.Copyrighted.value == "False") {
@@ -246,7 +249,13 @@ function parseMetadata(response) {
                 else {
                     $("#reflect").append(messages.unsupported_license);
                 }
-
+                
+                // if any of these are missing rendering fails, most likely due to no supported template
+                if (! (extmetadata.Artist && extmetadata.Credit && extmetadata.ImageDescription) ) {
+                    $("#reflect").append(messages.no_information);
+                    render = false;
+                }
+                
                 // output
                 if (render) {
                     addInput({
