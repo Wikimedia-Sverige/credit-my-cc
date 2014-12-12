@@ -53,6 +53,7 @@ form {
 .collapse{
     float: right;
     border: 1px solid;
+    padding: 4px
 }
 
 .examples{
