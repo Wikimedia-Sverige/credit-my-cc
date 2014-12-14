@@ -121,8 +121,8 @@ $(document).ready(function() {
         }
 
         // output
-        $('#letter_templated').loadTemplate("#template_basic", // load local
-        //$('#letter_templated').loadTemplate("./templates/" + $('#letter_selector').val(),
+        //$('#letter_templated').loadTemplate("#template_basic", // load local
+        $('#letter_templated').loadTemplate("./templates/" + $('#letter_selector').val(),
             {
                 descr: descr,
                 usage: $('#usage').val(),
