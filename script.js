@@ -221,6 +221,7 @@ function parseMetadata(response) {
             $('#reflect').html(messages.missing_file);
         }
         else {
+            console.log(JSON.stringify(value));
             // display image independent on later errors
             $('#thumb').attr("src", value.imageinfo[0].thumburl);
             $('#thumb').attr("width", thumbsize);
