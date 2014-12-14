@@ -235,11 +235,12 @@ function parseMetadata(response) {
                 // formatting
                 render = false;
                 var lic = value.imageinfo[0].extmetadata.LicenseShortName.value;
-                if(lic.indexOf('CC-BY-SA-') === 0) {
+                if(lic.indexOf('CC-BY-SA-') === 0 || lic.indexOf('CC BY-SA ') === 0) {
+                    // test for both since this recently got corrected but a lot of values are cached
                     lic = "CC BY-SA " + lic.slice(9);
                     render = true;
                 }
-                else if (lic.indexOf('CC-BY-') === 0) {
+                else if (lic.indexOf('CC-BY-') === 0 || lic.indexOf('CC BY ') === 0) {
                     lic = "CC BY " + lic.slice(6);
                     render = true;
                 }
