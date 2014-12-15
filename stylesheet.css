@@ -40,8 +40,6 @@ form {
 
 .cmt{
     font-style: italic;
-    float: left;
-    text-align: left;
 }
 
 .problem{
@@ -73,6 +71,8 @@ input {
 
 .form .cmt {
     width: 40%;
+    text-align: left;
+    float: left;
 }
 
 .form br {
