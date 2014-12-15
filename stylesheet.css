@@ -17,9 +17,16 @@ form {
 	margin-top:2px;
     border:none;
 }
+p + ul {
+    margin-top: -10px;
+}
 
 .thumbDiv{
     float: left;
+}
+
+.indent{
+    margin-left: 15%;
 }
 
 .clear, .footer {
@@ -28,14 +35,15 @@ form {
 
 .letter{
     border: 1px solid;
+    padding: 4px;
+}
+
+.letter .indent{
+    margin-left: 2.5em;
 }
 
 .hidden, .examples{
     display: none;
-}
-
-.indent{
-    margin-left: 15%;
 }
 
 .cmt{
@@ -50,7 +58,7 @@ form {
 .collapse{
     float: right;
     border: 1px solid;
-    padding: 4px
+    padding: 4px;
 }
 
 label{
