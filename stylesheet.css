@@ -40,7 +40,6 @@ form {
 
 .cmt{
     font-style: italic;
-    width: 40%;
     float: left;
     text-align: left;
 }
@@ -70,6 +69,10 @@ input {
 .preview {
     padding-left: 1em;
     opacity: 0.75;
+}
+
+.form .cmt {
+    width: 40%;
 }
 
 .form br {
