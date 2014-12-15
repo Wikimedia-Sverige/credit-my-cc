@@ -1,9 +1,13 @@
 var thumbsize = 200;
 var button_text = "";
 var letters = {
-    "first.html": "Jans",
-    "basic.html": "test"
+    "happy": "happy.html",
+    "neutral": "neutral.html",
+    "angry": "angry.html",
+    "test": "basic.html",
+    "Jans utkast": "jan.html"
 };
+var radio_letters = ["happy", "neutral", "angry"];
 var messages = {
     "no_license": "Filsidan verkar sakna maskinläsbar licens.<br /> Vänligen fixa filsidan och försök igen.",
     "no_information": "Filsidan verkar sakna maskinläsbar metadata om skapare eller ett annat nödvänfigt fält.<br /> Lägg till en Information-mall på sidan och försök igen.",
@@ -48,6 +52,15 @@ $(document).ready(function() {
     $('input').each(function() {
         if ($(this).prop('required') && $(this).attr('type') != 'hidden') {
             $(this).after("<span class=\"problem\">*</span>");
+        }
+    });
+    // display list on monkey select
+    $("input[name='letter_selector_radio']").change(function() {
+        if ($('#letter_selector_other').prop("checked")) {
+            $("#letter_selector_list").removeClass('hidden');
+        }
+        else {
+            $("#letter_selector_list").addClass('hidden');
         }
     });
     // handle invalid or missing publisher e-mail
@@ -114,6 +127,9 @@ $(document).ready(function() {
         var license_url = $('#license_url').val();
         var upload_date = $('#upload_date').val();
         var publisher = $('#publisher').val();
+        var letter_radio = $('input[name=letter_selector_radio]:checked', '#letter_selector').val();
+        var letter_list = $('#letter_selector_list').val();
+        var letter_value = '';
         // $('#publisher').val();
 
         // parse
@@ -123,6 +139,16 @@ $(document).ready(function() {
         if (upload_date !== ''){
             upload_date = "sedan " + upload_date;
         }
+        if (letter_radio !== 'other'){
+            letter_value = letters[letter_radio];
+        }
+        else {
+            letter_value = letters[letter_list];
+        }
+        console.log('radio: ' + letter_radio + '; list: ' + letter_list +'; value: ' + letter_value);
+        
+        
+        // pregenerate thes to ensure they are the same in all letters
         var example_online = '<a href="' + file_url + '">' + file_title + '</a> / ' +
                              '<span>' + credit + '</span> / ' +
                              '<a href="' + license_url +'">' + license_title + '</a><br />';
@@ -132,7 +158,7 @@ $(document).ready(function() {
 
         // output
         //$('#letter_templated').loadTemplate("#template_basic", // load local
-        $('#letter_templated').loadTemplate("./templates/" + $('#letter_selector').val(),
+        $('#letter_templated').loadTemplate("./templates/" + letter_value,
             {
                 descr: descr,
                 usage: $('#usage').val(),
@@ -317,11 +343,20 @@ function addInput(data) {
     $('#descr_extra').html(data.descr_extra);
     $('#publisher').val(data.publisher);
     // populate selector
-    $('#letter_selector').empty();
+    //$('#letter_selector').empty();
+    //$.each(letters, function(key, value) {
+    //    $('#letter_selector')
+    //        .append($('<option>', { key : value })
+    //        .text(key));
+    //});
+    // populate selector, but not with radio options
+    $('#letter_selector_list').empty();
     $.each(letters, function(key, value) {
-        $('#letter_selector')
-            .append($('<option>', { value : key })
-            .text(value));
+        if ($.inArray(key, radio_letters)<0) {
+            $('#letter_selector_list')
+                .append($('<option>', { key : value })
+                .text(key));
+        }
     });
 }
 

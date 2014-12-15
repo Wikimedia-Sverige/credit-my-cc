@@ -69,6 +69,19 @@ input {
     opacity: 0.75;
 }
 
+.letter_selector_group{
+    display:inline-block;
+    text-align:center;
+    padding-right: 1em;
+}
+
+.letter_selector_group label {
+    display:block;
+    clear: none;
+    float: none !important;
+    text-align: left;
+}
+
 .form .cmt {
     width: 40%;
     text-align: left;

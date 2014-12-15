@@ -51,19 +51,39 @@
         <div id="post_lookup" class="hidden form">
             <label>Titel:</label> <span id="pagename"><a></a></span><br />
             <label>Licens:</label> <span id="license"><a></a></span><br />
-            <label>Användning:</label> <input type="text" id="usage" title="Var används filen på ett felaktigt sätt" placeholder="www.skvallerblaskan.se/hetasteNyheten/" tabindex=3 required/><br />
-            <label>Utgivare:</label> <input type="text" id="publisher" title="Vem är ansvarig för utgivningen (e-post)" placeholder="bild@skvallerblaskan.se" tabindex=4 /> <span id="publisher_preview" class="preview"></span><br />
-            <label>Erkännande:</label> <input type="text" id="credit" title="Hur jag vill bli erkänd" class="to_preview" placeholder="Användarnamn" tabindex=5 required/> <span id="credit_preview" class="preview"></span><br />
+            <label for="usage">Användning:</label> <input type="text" id="usage" title="Var används filen på ett felaktigt sätt" placeholder="www.skvallerblaskan.se/hetasteNyheten/" tabindex=3 required/><br />
+            <label for="publisher">Utgivare:</label> <input type="text" id="publisher" title="Vem är ansvarig för utgivningen (e-post)" placeholder="bild@skvallerblaskan.se" tabindex=4 /> <span id="publisher_preview" class="preview"></span><br />
+            <label for="credit">Erkännande:</label> <input type="text" id="credit" title="Hur jag vill bli erkänd" class="to_preview" placeholder="Användarnamn" tabindex=5 required/> <span id="credit_preview" class="preview"></span><br />
             <span id="credit_extra" class="indent cmt" title="Texten i fältet 'Källa' på Commons"></span><br />
-            <label>Uppladdningsdatum:</label> <input type="text" id="upload_date" title="Uppladdningsdatum (kan utelämnas)" placeholder="ÅÅÅÅ-MM-DD" tabindex=6 /><br />
+            <label for="upload_date">Uppladdningsdatum:</label> <input type="text" id="upload_date" title="Uppladdningsdatum (kan utelämnas)" placeholder="ÅÅÅÅ-MM-DD" tabindex=6 /><br />
             <span id="upload_date_cmt" class="indent cmt"></span><br />
-            <label>Beskrivning:</label> <input type="text" id="descr" title="En kort beskrivning av bilden (kan utelämnas)" class="to_preview" placeholder="Jimmy Wales" tabindex=7 /> <span id="descr_preview" class="preview"></span><br />
+            <label for="descr">Beskrivning:</label> <input type="text" id="descr" title="En kort beskrivning av bilden (kan utelämnas)" class="to_preview" placeholder="Jimmy Wales" tabindex=7 /> <span id="descr_preview" class="preview"></span><br />
             <span id="descr_extra" class="indent cmt" title="Beskrivningen på filsidan"></span><br />
             <input type="hidden" id="license_title" required/>
             <input type="hidden" id="license_url" required/>
             <input type="hidden" id="file_title" required/>
             <input type="hidden" id="file_url" required/>
-            <label>Brevtyp:</label> <select id="letter_selector" title="Välj ett av de olika brevformaten" tabindex=8 required/></select><span class="problem">*</span><br />
+            <!--<label for="letter_selector">Brevtyp:</label> <select id="letter_selector" title="Välj ett av de olika brevformaten" tabindex=8 required/></select><span class="problem">*</span><br />-->
+            <label for="letter_selector">Brevtyp:</label>
+            <div id="letter_selector" title="Välj ett av de olika brevformaten">
+                <div class="letter_selector_group">
+                    <label for="letter_selector_happy"><img src="./images/Face-smile.png" width="35px" alt="Glad" title="Glad" /></label>
+                    <input type="radio" name="letter_selector_radio" value="happy" id="letter_selector_happy" checked/>
+                </div>
+                <div class="letter_selector_group">
+                    <label for="letter_selector_neutral"><img src="./images/Face-plain.png" width="35px" alt="Neutral" title="Neutral" /></label>
+                    <input type="radio" name="letter_selector_radio" value="neutral" id="letter_selector_neutral" />
+                </div>
+                <div class="letter_selector_group">
+                    <label for="letter_selector_angry"><img src="./images/Face-sad.png" width="35px" alt="Arg" title="Arg" /></label>
+                    <input type="radio" name="letter_selector_radio" value="angry" id="letter_selector_angry" />
+                </div>
+                <div class="letter_selector_group">
+                    <label for="letter_selector_other"><img src="./images/Face-monkey.png" width="35px" alt="Andra" title="Andra" /></label>
+                    <input type="radio" name="letter_selector_radio" value="other" id="letter_selector_other" />
+                </div><span class="problem">*</span>
+                <select class="hidden" id="letter_selector_list" title="Välj ett av de andra brevformaten" /></select>
+            </div><br />
             <button id="button_write" class="button indent" tabindex=9 >Skriv!</button>
         </div>
         <br />
@@ -79,9 +99,10 @@
         <div id="clipboard" class="clipboard"></div><!-- Hidden div for simplified copy-pasting -->
         <footer class="footer">
             <hr />
-            <p><small>Denna sida producerades för <a href="http://wikimedia.se/">Wikimedia Sverige</a> av André Costa.
+            <p><small>Denna sida producerades för <a href="http://wikimedia.se/">Wikimedia Sverige</a> av André Costa.<br />
             Du hittar källkoden på <a href="https://github.com/lokal-profil/credit-my-cc">GitHub</a> och kan anmäla fel/förbättringar
-            där eller på <a href="https://se.wikimedia.org/wiki/Anv%C3%A4ndardiskussion:Andr%C3%A9_Costa_%28WMSE%29">Andrés diskussionssida</a>.
+            där eller på <a href="https://se.wikimedia.org/wiki/Anv%C3%A4ndardiskussion:Andr%C3%A9_Costa_%28WMSE%29">Andrés diskussionssida</a>.<br />
+            Ikonerna kommer från <a href="https://en.wikipedia.org/wiki/Tango_Desktop_Project">Tango!</a>-projektet.
             </small></p>
         </footer>
         <!-- Templates -->
