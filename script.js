@@ -313,6 +313,8 @@ function parseMetadata(response) {
                         });
                     // make post_lookup_templated visible
                     $('#post_lookup').removeClass('hidden');
+                    // and focus on usage field
+                    $('#usage').focus();
                 }
             }
             else {
