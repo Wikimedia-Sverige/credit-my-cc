@@ -22,7 +22,7 @@ form {
     float: left;
 }
 
-.clear {
+.clear, .footer {
     clear: both;
 }
 
@@ -30,7 +30,7 @@ form {
     border: 1px solid;
 }
 
-.hidden{
+.hidden, .examples{
     display: none;
 }
 
@@ -54,10 +54,6 @@ form {
     float: right;
     border: 1px solid;
     padding: 4px
-}
-
-.examples{
-    display:none;
 }
 
 label{
