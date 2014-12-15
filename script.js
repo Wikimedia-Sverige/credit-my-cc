@@ -108,6 +108,10 @@ $(document).ready(function() {
         // read values
         var credit = $('#credit').val();
         var descr = $('#descr').val();
+        var file_url = $('#file_url').val();
+        var file_title = $('#file_title').val();
+        var license_title = $('#license_title').val();
+        var license_url = $('#license_url').val();
         var upload_date = $('#upload_date').val();
         var publisher = $('#publisher').val();
         // $('#publisher').val();
@@ -119,6 +123,12 @@ $(document).ready(function() {
         if (upload_date !== ''){
             upload_date = "sedan " + upload_date;
         }
+        var example_online = '<a href="' + file_url + '">' + file_title + '</a> / ' +
+                             '<span>' + credit + '</span> / ' +
+                             '<a href="' + license_url +'">' + license_title + '</a><br />';
+        var example_offline = '<span>' + file_title + ' @ Wikimedia Commons</span> / ' +
+                              '<span>' + unwrapAll(credit) + '</span> / ' +
+                              '<span>' + license_title + '</span>';
 
         // output
         //$('#letter_templated').loadTemplate("#template_basic", // load local
@@ -127,12 +137,13 @@ $(document).ready(function() {
                 descr: descr,
                 usage: $('#usage').val(),
                 upload_date: upload_date,
-                license_title: $('#license_title').val(),
-                license_url: $('#license_url').val(),
-                file_title: $('#file_title').val(),
-                file_url: $('#file_url').val(),
+                license_title: license_title,
+                license_url: license_url,
+                file_title: file_title,
+                file_url: file_url,
                 credit: credit,
-                credit_plain: unwrapAll(credit)
+                example_online: example_online,
+                example_offline: example_offline
             });
         // make letter visible
         $('#letter').removeClass('hidden');
