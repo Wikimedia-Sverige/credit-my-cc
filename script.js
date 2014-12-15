@@ -134,7 +134,7 @@ $(document).ready(function() {
 
         // parse
         if (descr !== ''){
-            descr = "på " + descr;
+            descr = "av " + descr;
         }
         if (upload_date !== ''){
             upload_date = "sedan " + upload_date;
