@@ -4,6 +4,7 @@
 		<title>Bryter någon mot din licens?</title>
         <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
         <link rel='stylesheet' type='text/css' href='stylesheet.css'/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
         <script type="text/javascript" src="./jquery.loadTemplate-1.4.5.min.js"></script>
         <script type="text/javascript" src="script.js"></script>
@@ -20,12 +21,6 @@
                     <li>GFDL: <a href="./index.html?filename=0038-fahrradsammlung-RalfR.jpg"><tt>0038-fahrradsammlung-RalfR.jpg</tt></a></li>
                     <li>CC0: <a href="./index.html?filename=Well-wikipedia2.svg"><tt>Well-wikipedia2.svg</tt></a></li>
                     <li>Ingen info-mall: <a href="./index.html?filename=Ruins_at_Delfi.JPG"><tt>Ruins at Delfi.JPG</tt></a></li>
-                </ul>
-                TODO:
-                <ul>
-                    <li>Hur ska det spridas?</li>
-                    <li>Val att det registreras/att nån av våra adresser läggs till som cc..?</li>
-                    <li>Lägg till en OM?</li>
                 </ul>
             </div>
         </div>
@@ -51,12 +46,11 @@
             <label>Titel:</label> <span id="pagename"><a></a></span><br />
             <label>Licens:</label> <span id="license"><a></a></span><br />
             <label for="usage">Användning:</label> <input type="text" id="usage" title="Var används filen på ett felaktigt sätt" placeholder="www.skvallerblaskan.se/hetasteNyheten/" tabindex=3 required/><br />
-            <label for="publisher">Utgivare:</label> <input type="text" id="publisher" title="Vem är ansvarig för utgivningen (e-post)" placeholder="bild@skvallerblaskan.se" tabindex=4 /> <span id="publisher_preview" class="preview"></span><br />
-            <label for="credit">Erkännande:</label> <input type="text" id="credit" title="Hur jag vill bli erkänd" class="to_preview" placeholder="Användarnamn" tabindex=5 required/> <span id="credit_preview" class="preview"></span><br />
+            <label for="credit">Erkännande:</label> <input type="text" id="credit" title="Hur jag vill bli erkänd" class="to_preview" placeholder="Användarnamn" tabindex=4 required/> <span id="credit_preview" class="preview"></span><br />
             <span id="credit_extra" class="indent cmt" title="Texten i fältet 'Källa' på Commons"></span><br />
-            <label for="upload_date">Uppladdningsdatum:</label> <input type="text" id="upload_date" title="Uppladdningsdatum (kan utelämnas)" placeholder="ÅÅÅÅ-MM-DD" tabindex=6 /><br />
+            <label for="upload_date">Uppladdningsdatum:</label> <input type="text" id="upload_date" title="Uppladdningsdatum (kan utelämnas)" placeholder="ÅÅÅÅ-MM-DD" tabindex=5 /><br />
             <span id="upload_date_cmt" class="indent cmt"></span><br />
-            <label for="descr">Beskrivning:</label> <input type="text" id="descr" title="En kort beskrivning av bilden (kan utelämnas)" class="to_preview" placeholder="Jimmy Wales" tabindex=7 /> <span id="descr_preview" class="preview"></span><br />
+            <label for="descr">Beskrivning:</label> <input type="text" id="descr" title="En kort beskrivning av bilden (kan utelämnas)" class="to_preview" placeholder="Jimmy Wales" tabindex=6 /> <span id="descr_preview" class="preview"></span><br />
             <span id="descr_extra" class="indent cmt" title="Beskrivningen på filsidan"></span><br />
             <input type="hidden" id="license_title" required/>
             <input type="hidden" id="license_url" required/>
@@ -67,7 +61,7 @@
             <div id="letter_selector" title="Välj ett av de olika brevformaten">
                 <div class="letter_selector_group">
                     <label for="letter_selector_happy"><img src="./images/Face-smile.png" width="35px" alt="Glatt brev" title="Glatt brev" /></label>
-                    <input type="radio" name="letter_selector_radio" value="happy" id="letter_selector_happy" tabindex=8 checked/>
+                    <input type="radio" name="letter_selector_radio" value="happy" id="letter_selector_happy" tabindex=7 checked/>
                 </div>
                 <div class="letter_selector_group">
                     <label for="letter_selector_neutral"><img src="./images/Face-plain.png" width="35px" alt="Neutralt brev" title="Neutralt brev" /></label>
@@ -83,26 +77,22 @@
                 </div><span class="problem">*</span>
                 <select class="hidden" id="letter_selector_list" title="Välj ett av de andra brevformaten" /></select>
             </div><br />
-            <button id="button_write" class="button indent" tabindex=9 >Skriv!</button>
+            <button id="button_write" class="button indent" tabindex=8 >Skriv!</button>
         </div>
         <br />
         <div id="letter" class="clear hidden">
             <div id="copy_me">Kopiera text och formatering genom att trycka <b>ctrl + c</b> eller <b>⌘ + c</b> (du behöver inte markera texten).</div>
             <div id="letter_templated" class="letter"></div>
-            <button id="button_mailto" class="button" title="Skicka ovanstående till din e-postklient" tabindex=10 >Skicka!</button><br />
-            <div class="cmt">
-                Notera att all formatering tappas vid export genom ovanstående knapp.<br />
-                För att behålla formateringen bör du istället klistra in ovanstående i din e-postklient.
-            </div>
         </div>
         <div id="clipboard" class="clipboard"></div><!-- Hidden div for simplified copy-pasting -->
         <footer class="footer">
             <hr />
-            <p><small>Denna sida producerades för <a href="http://wikimedia.se/">Wikimedia Sverige</a> av André Costa.<br />
+            <p>
+            Denna sida producerades för <a href="http://wikimedia.se/">Wikimedia Sverige</a> av André Costa.<br />
             Du hittar källkoden på <a href="https://github.com/lokal-profil/credit-my-cc">GitHub</a> och kan anmäla fel/förbättringar
             där eller på <a href="https://se.wikimedia.org/wiki/Anv%C3%A4ndardiskussion:Andr%C3%A9_Costa_%28WMSE%29">Andrés diskussionssida</a>.<br />
             Ikonerna kommer från <a href="https://en.wikipedia.org/wiki/Tango_Desktop_Project">Tango!</a>-projektet.
-            </small></p>
+            </p>
         </footer>
         <!-- Templates -->
         <!-- Used for testing (real ones are in /templates) -->

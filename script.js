@@ -63,32 +63,6 @@ $(document).ready(function() {
             $("#letter_selector_list").addClass('hidden');
         }
     });
-    // handle invalid or missing publisher e-mail
-    $('#publisher').focusout(function() {
-        var content = $(this).val();
-        var previewId = "#" + $(this).attr('id') + "_preview";
-        $(previewId).removeClass('problem');
-        if (content !== ''){
-            ok = false;
-            if (content.indexOf('@') > 0) {
-                if (content.indexOf('.', content.indexOf('@')) > 0) {
-                    ok = true;
-                }
-            }
-            if (ok) {
-                $(previewId).html(content);
-                $('#button_mailto').prop("disabled", false);
-            }
-            else {
-                $(previewId).addClass('problem');
-                $(previewId).html(messages.not_an_email);
-                $('#button_mailto').prop("disabled", true);
-            }
-        }
-        else {
-            $('#button_mailto').attr("disabled", true);
-        }
-    });
     // on enter or clicking button, look up info on Commons
     $('#filename').keypress(function(e) {
         if(e.which == 13) {
@@ -126,11 +100,9 @@ $(document).ready(function() {
         var license_title = $('#license_title').val();
         var license_url = $('#license_url').val();
         var upload_date = $('#upload_date').val();
-        var publisher = $('#publisher').val();
         var letter_radio = $('input[name=letter_selector_radio]:checked', '#letter_selector').val();
         var letter_list = $('#letter_selector_list').val();
         var letter_value = '';
-        // $('#publisher').val();
 
         // parse
         if (descr !== ''){
@@ -146,8 +118,8 @@ $(document).ready(function() {
             letter_value = letters[letter_list];
         }
         console.log('radio: ' + letter_radio + '; list: ' + letter_list +'; value: ' + letter_value);
-        
-        
+
+
         // pregenerate thes to ensure they are the same in all letters
         var example_online = '<a href="' + file_url + '">' + file_title + '</a> / ' +
                              '<span>' + credit + '</span> / ' +
@@ -191,16 +163,6 @@ $(document).ready(function() {
         }
     });
 
-    // send mail on mailto
-    $('#button_mailto').click(function() {
-        var subject = messages.subject;
-        window.open("mailto:" +
-                    $('#publisher').val() +
-                    "?subject=" +
-                    subject +
-                    "&body=" +
-                    encodeURIComponent($('#letter_templated').text()) , '_blank');
-    });
 });
 
 // Validate filename and request info from Commons
@@ -288,13 +250,13 @@ function parseMetadata(response) {
                 else {
                     $("#reflect").append(messages.unsupported_license);
                 }
-                
+
                 // if any of these are missing rendering fails, most likely due to no supported template
                 if (! (extmetadata.Artist && extmetadata.Credit && extmetadata.ImageDescription) ) {
                     $("#reflect").append(messages.no_information);
                     render = false;
                 }
-                
+
                 // output
                 if (render) {
                     addInput({
@@ -308,8 +270,7 @@ function parseMetadata(response) {
                         license_title: lic,
                         license_url: value.imageinfo[0].extmetadata.LicenseUrl.value,
                         file_title: value.title.slice(5),
-                        file_url: value.imageinfo[0].descriptionurl,
-                        publisher: ""
+                        file_url: value.imageinfo[0].descriptionurl
                         });
                     // make post_lookup_templated visible
                     $('#post_lookup').removeClass('hidden');
@@ -343,7 +304,6 @@ function addInput(data) {
     $('#descr').val(data.descr);
     $('#descr_preview').html(data.descr);
     $('#descr_extra').html(data.descr_extra);
-    $('#publisher').val(data.publisher);
     // populate selector
     //$('#letter_selector').empty();
     //$.each(letters, function(key, value) {

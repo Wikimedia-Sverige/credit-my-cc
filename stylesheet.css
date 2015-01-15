@@ -33,6 +33,10 @@ p + ul {
     clear: both;
 }
 
+.footer {
+    font-size: smaller;
+}
+
 .letter{
     border: 1px solid;
     padding: 4px;
