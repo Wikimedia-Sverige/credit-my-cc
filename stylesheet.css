@@ -1,10 +1,11 @@
-form {
+h1{
+    display: block;
+}
+form{
     display: inline-block;
     clear: both;
 }
-
 .button{
-    display: inline-block;
     height:20px;
 	width:70px;
 	background-color:#ABCDEF;
@@ -17,98 +18,86 @@ form {
 	margin-top:2px;
     border:none;
 }
-p + ul {
+p + ul{
     margin-top: -10px;
 }
-
 .thumbDiv{
     float: left;
+    width: 25%;
+    min-width: 200px;
+    max-height: 650px;
+    padding-left: 0.5em;
 }
-
+#thumb{
+    width: 100%;
+}
 .indent{
     margin-left: 15%;
 }
-
-.clear, .footer {
+.clear, .footer{
     clear: both;
 }
-
-.footer {
+.footer{
     font-size: smaller;
 }
-
 .letter{
     border: 1px solid;
     padding: 4px;
 }
-
 .letter .indent{
     margin-left: 2.5em;
 }
-
 .hidden, .examples{
     display: none;
 }
-
 .cmt{
     font-style: italic;
 }
-
 .problem{
     font-weight: bold;
     color: red;
 }
-
 .collapse{
     float: right;
     border: 1px solid;
     padding: 4px;
 }
-
 label{
     clear: left;
     width: 15%;
     padding-right: 0.5em;
 }
-
-input {
+input{
     float: left;
-    width: 20%;
+    width: 25%;
 }
-
-.preview {
+.preview{
     padding-left: 1em;
     opacity: 0.75;
 }
-
 .letter_selector_group{
     display:inline-block;
     text-align:center;
     padding-right: 1em;
 }
-
-.letter_selector_group label {
+.letter_selector_group label{
     display:block;
     clear: none;
     float: none !important;
     text-align: left;
 }
-
-.form .cmt {
+.form .cmt{
     width: 40%;
     text-align: left;
     float: left;
 }
-
-.form br {
+.form br{
     clear: left;
 }
-
 .form label{
     float: left;
     text-align: right;
 }
-
 .active{
     -webkit-box-shadow: 0 0 8px #FFD700;
     -moz-box-shadow: 0 0 8px #FFD700;
@@ -116,18 +105,15 @@ input {
     background-color:#556677;
     cursor:pointer;
 }
-
 .highlighted{
     -webkit-box-shadow: 0 0 8px #FF0000;
     -moz-box-shadow: 0 0 8px #FF0000;
     box-shadow: 0 0 8px #FF0000;
 }
-
 .warning{
     background-color: #FFAAAA;
 }
-
-.clipboard {
+.clipboard{
     position: fixed;
     left: 0;
     top: 0;
@@ -135,4 +121,15 @@ input {
     height: 0;
     z-index: 100;
     opacity: 0;
+}
+div.logo{
+    float: right;
+    clear: right;
+    padding: 4px;
+    width: 20%;
+    max-width: 450px;
+    min-width: 150px;
+}
+img.logo{
+    width: 100%;
 }

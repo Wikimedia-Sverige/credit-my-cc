@@ -1,4 +1,4 @@
-var thumbsize = 200;
+var thumbsize = 400;
 var button_text = "";
 var letters = {
     "happy": "happy.html",

@@ -3,13 +3,22 @@
 	<head>
 		<title>Bryter någon mot din licens?</title>
         <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-        <link rel='stylesheet' type='text/css' href='stylesheet.css'/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <link rel='stylesheet' type='text/css' href='stylesheet.css'/>
+        <link rel="profile" href="//www.w3.org/2005/10/profile" />
+        <link rel="icon"
+              type="image/ico"
+              href="favicon.ico" />
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
         <script type="text/javascript" src="./jquery.loadTemplate-1.4.5.min.js"></script>
         <script type="text/javascript" src="script.js"></script>
 	</head>
 	<body>
+        <noscript>
+            <div class="clear problem indent">
+                Denna webbsida kräver JavaScript. Troligen kommer inget att fungera som det ska utan det.
+            </div>
+        </noscript>
         <div class="collapse">
             Exempel:
             <div id="examples" class="examples">
@@ -24,21 +33,22 @@
                 </ul>
             </div>
         </div>
-        <noscript>
-            <div class="clear problem indent">
-                Denna webbsida kräver JavaScript. Troligen kommer inget att fungera som det ska utan det.
-            </div>
-        </noscript>
-        <h1>Anmäl här om någon bryter mot din licens/upphovsrätt!</h1>
-        <p>Har du hittat en användning av ett verk du laddat upp till Wikimedia Commons där licensen inte följs ordentligt?<br />
-        Då kan du använda nedanstående verktyg för att snabbt sätta ihop ett e-post till illdådaren.</p>
+        <div class="logo">
+            <img src="images/credit-my-cc.svg" alt="Credit-my-CC logo" title="Credit-my-CC logo" class="logo"/>
+        </div>
+        <h1>Bryter någon mot licensen på ditt verk?</h1>
+        <p>
+            Har du hittat en användning av ett verk du laddat upp till Wikimedia Commons där licensen inte följs ordentligt?<br />
+            Är du osäker på hur du ska formulera ett klagomål?<br />
+            Då kan du använda nedanstående verktyg för att snabbt sätta ihop ett e-post till illdådaren.
+        </p>
 
         <div id="filename_form" class="form">
-            <label>Filnamn:</label> <input type="text" id="filename" title="Den använda filens namn på Wikimedia Commons" placeholder="Foo.jpg" tabindex=1 required/>
+            <label for="filename">Filnamn:</label> <input type="text" id="filename" title="Den använda filens namn på Wikimedia Commons" placeholder="Foo.jpg" tabindex=1 required/>
             <button id="button" class="button" tabindex=2>Kolla!</button>
         </div>
-        <br />
-        <div id="thumbDiv" class="thumbDiv clear indent hidden">
+        <p></p>
+        <div id="thumbDiv" class="thumbDiv indent hidden">
             <a><img id="thumb" title="Den använda bilden" alt="Den använda bilden"/></a>
         </div>
         <p id="reflect" class="clear problem indent"></p>
@@ -81,7 +91,10 @@
         </div>
         <br />
         <div id="letter" class="clear hidden">
-            <div id="copy_me">Kopiera text och formatering genom att trycka <b>ctrl + c</b> eller <b>⌘ + c</b> (du behöver inte markera texten).</div>
+            <div id="copy_me">
+                Kopiera text och formatering genom att trycka <b>Ctrl + c</b> eller <b>⌘ + c</b> (du behöver inte markera texten).<br />
+                Detta gör att du lätt kan klistra in texten i ett e-post som du skickar.
+            </div>
             <div id="letter_templated" class="letter"></div>
         </div>
         <div id="clipboard" class="clipboard"></div><!-- Hidden div for simplified copy-pasting -->
@@ -91,7 +104,10 @@
             Denna sida producerades för <a href="http://wikimedia.se/">Wikimedia Sverige</a> av André Costa.<br />
             Du hittar källkoden på <a href="https://github.com/lokal-profil/credit-my-cc">GitHub</a> och kan anmäla fel/förbättringar
             där eller på <a href="https://se.wikimedia.org/wiki/Anv%C3%A4ndardiskussion:Andr%C3%A9_Costa_%28WMSE%29">Andrés diskussionssida</a>.<br />
-            Ikonerna kommer från <a href="https://en.wikipedia.org/wiki/Tango_Desktop_Project">Tango!</a>-projektet.
+            Ikonerna kommer från <a href="https://en.wikipedia.org/wiki/Tango_Desktop_Project">Tango!</a>-projektet (Public&nbsp;Domain).<br />
+            Logotypen använder element från <a href="https://creativecommons.org/about/downloads#Icons">BY-ikonen</a> av Creative&nbsp;Commons
+            (<a href="https://creativecommons.org/licenses/by/4.0/">CC&nbsp;BY&nbsp;4.0</a>) samt
+            <a href="https://commons.wikimedia.org/wiki/File:Speech_bubble.svg">Speech bubble</a> av Amada44 (Public&nbsp;Domain).
             </p>
         </footer>
         <!-- Templates -->
