@@ -19,13 +19,16 @@ var messages = {
     "random_url": "Vänligen ange namnet på en fil på Wikimedia Commons (detta verkar vara en url någon annanstans).",
     "missing_parameter": "Följande krävda fält saknas: ",
     "subject": "Felaktig användning av mitt verk",
-    "not_an_email": "Det angivna värdet ser inte ut som en e-postadress."
+    "not_an_email": "Det angivna värdet ser inte ut som en e-postadress.",
+    "since_date": " sedan {upload_date}",
+    "of_object": " av {descr}"
 };
 $(document).ready(function() {
     // load filename from url
     var urlFilename = getURLParameter('filename');
     if (urlFilename) {
         $('#filename').val(urlFilename);
+        processFilename();  // lookup direclty if filename
     }
     // responsive buttons
     $('.button').hover(
@@ -106,10 +109,12 @@ $(document).ready(function() {
 
         // parse
         if (descr !== ''){
-            descr = "av " + descr;
+            descr = messages.of_object
+                    .replace('{descr}', descr);
         }
         if (upload_date !== ''){
-            upload_date = "sedan " + upload_date;
+            upload_date = messages.since_date
+                          .replace('{upload_date}', upload_date);
         }
         if (letter_radio !== 'other'){
             letter_value = letters[letter_radio];
@@ -118,7 +123,6 @@ $(document).ready(function() {
             letter_value = letters[letter_list];
         }
         console.log('radio: ' + letter_radio + '; list: ' + letter_list +'; value: ' + letter_value);
-
 
         // pregenerate thes to ensure they are the same in all letters
         var example_online = '<a href="' + file_url + '">' + file_title + '</a> / ' +
@@ -142,9 +146,14 @@ $(document).ready(function() {
                 credit: credit,
                 example_online: example_online,
                 example_offline: example_offline
-            });
-        // make letter visible
-        $('#letter').removeClass('hidden');
+            },
+            {
+                afterInsert: function() {
+                    webkitFudge($('#letter_templated'));  // chrome bug
+                    $('#letter').removeClass('hidden');   // make letter visible
+                }
+            }
+        );
     });
 
     // ctrl+c, mac+c putts letter in clipboard
@@ -164,6 +173,20 @@ $(document).ready(function() {
     });
 
 });
+
+// handle chrome bug https://stackoverflow.com/questions/2954178/
+function webkitFudge(object) {
+    if (jQuery.browser.webkit){
+        console.log("webkit fudge");
+        var letterhtml = object.html();
+        letterhtml = letterhtml
+                    .replace(/[ ]?<span([^>]*)>[ ]?/g, "&nbsp;<span$1>")
+                    .replace(/<\/span>[ ]?/g, "</span>&nbsp;")
+                    .replace(/&nbsp;&nbsp;/g, "&nbsp;")
+                    .replace(/&nbsp;<span([^>]*)><\/span>&nbsp;/g, "&nbsp;<span$1></span>");
+        object.html(letterhtml);
+    }
+}
 
 // Validate filename and request info from Commons
 function processFilename() {
