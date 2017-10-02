@@ -223,7 +223,7 @@ function processFilename() {
         input = $('#filename').val();
         $('#filename').removeClass('highlighted');
         button_text = $('#button').html(); //because I don't want to hardcode value
-        $('#button').html("loading...");
+        $('#button').html("hämtar...");
         $.getJSON("https://commons.wikimedia.org/w/api.php?action=query&prop=imageinfo&format=json&iilimit=1" +
                   "&iiprop=url|timestamp|extmetadata" +
                   "&iiurlwidth=" + thumbsize +
