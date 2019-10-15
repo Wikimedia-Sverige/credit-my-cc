@@ -5,7 +5,14 @@ credit-my-cc
 Credit-my-cc is a simple webpage (in Swedish) for producing a complaint when your images on Wikimedia Commons are improperly reused.
 
 ## How to use
-First, add the filename of the image on Wikimedia Commons (without File:) and press Kolla!. Then add the URL where the image has been improperly used in the field **Användning**. If you want to be attributed in another way than what the tool could figure out from the data on Wikimedia Commons, edit the field **Erkännande**. The four radio buttons in the bottom are used to set the tone of the language in the template that is generated on a scale from ☺️ to 🐵. Then press **Skriv!** to generate the template. Copy the text into your email client and send. Hopefully you will get a proper response. Good luck!
+1. Add the filename of the image on Wikimedia Commons and press **Kolla!**.
+2. Add the URL where the image has been improperly used in the field **Användning**.
+3. If you want to be attributed in another way than what the tool could figure out from the data on Wikimedia Commons, edit the field **Erkännande**.
+4. The four radio buttons in the bottom are used to set the tone of the language in the template that is generated on a scale from ☺️ to 🐵.
+5. Press **Skriv!** to generate the template.
+6. Copy the text into your email client and send.
+
+Hopefully you will get a proper response. Good luck!
 
 ## Requires
 This requires [jquery.loadTemplate-1.4.5.min.js](https://github.com/codepb/jquery-template).
